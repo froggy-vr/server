@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://kevin.tanuhardi:passwordHacktiv8@ds213645.mlab.com:13645/vroggy')
