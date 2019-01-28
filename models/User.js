@@ -6,6 +6,7 @@ const usersSchema = new Schema({
   highScore: Number,
 })
 
+
 let User = mongoose.model('User', usersSchema)
 
 module.exports = User
