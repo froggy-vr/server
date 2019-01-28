@@ -5,8 +5,15 @@ const app = require('../app')
 const expect = chai.expect
 chai.use(chaiHttp);
 
+const User = require('../models/User')
 
 describe('User tests', function () {
+  afterEach(done => {
+    User.deleteMany({}, err => {
+      done()
+    })
+  })
+
   describe('POST /', function () {
     it('creating new user should return an object of new user with 201 status code', function (done) {
       let user = {
@@ -92,9 +99,10 @@ describe('User tests', function () {
         .request(app)
         .get(`/users/zzzzzz`)
         .end(function (err, res) {
-          // console.log(res.body)
           expect(err).to.be.null;
-          expect(res).to.have.status(400);
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property('user');
+          expect(res.body.user).to.be.null;
           done()
         })
     })
