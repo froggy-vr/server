@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const usersSchema = new Schema({
-  gameId: String,
+  gameId: {
+    type: String,
+    required: true
+  },
   highScore: Number,
 })
 
