@@ -22,7 +22,7 @@ module.exports = {
     })
   },
   findOne: function(req,res,next){
-    User.findById(req.params.id)
+    User.findOne({gameId: req.params.gameId})
     .then( user =>{
       res.status(200).json({user})
     })
@@ -31,8 +31,10 @@ module.exports = {
     })
   },
   update: function(req,res,next){
-    User.findByIdAndUpdate(
-      req.params.id,
+    User.findOneAndUpdate(
+      {
+        gameId: req.params.gameId
+      },
       {
         highScore: req.body.highScore
       },

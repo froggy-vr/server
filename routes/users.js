@@ -6,7 +6,7 @@ const usersController = require("../controllers/users.js")
 
 router.get("/", usersController.all)
 router.post("/", usersController.create)
-router.get("/:id", usersController.findOne)
-router.patch("/:id", usersController.update)
+router.get("/:gameId", usersController.findOne)
+router.patch("/:gameId", usersController.update)
 
 module.exports = router;
