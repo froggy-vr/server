@@ -6,7 +6,7 @@ module.exports = {
       gameId: req.body.gameId
     })
     .then((newUser) =>{
-      res.status(200).json({user:newUser})
+      res.status(201).json({user:newUser})
     })
     .catch((err) =>{
       res.status(400).json(err)
@@ -24,7 +24,11 @@ module.exports = {
   findOne: function(req,res,next){
     User.findOne({gameId: req.params.gameId})
     .then( user =>{
-      res.status(200).json({user})
+      if (user) {
+        res.status(200).json({user})
+      } else {
+        throw Error('not found')
+      }
     })
     .catch(err =>{
       res.status(400).json(err)
@@ -41,7 +45,7 @@ module.exports = {
       {new: true}
     )
     .then((user) =>{
-      res.status(200).json({user})
+      res.status(201).json({user})
     })
     .catch(err =>{
       res.status(400).json(err)
