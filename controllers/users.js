@@ -24,11 +24,7 @@ module.exports = {
   findOne: function(req,res,next){
     User.findOne({gameId: req.params.gameId})
     .then( user =>{
-      if (user) {
-        res.status(200).json({user})
-      } else {
-        throw Error('not found')
-      }
+      res.status(200).json({user})
     })
     .catch(err =>{
       res.status(400).json(err)
