@@ -5,8 +5,8 @@ const usersController = require("../controllers/users.js")
 /* GET users listing. */
 
 router.get("/", usersController.all)
-router.post("/", isLoggedIn, usersController.create)
-router.get("/:id", usersController.detail)
-router.patch("/:id", isLoggedIn, usersController.update)
+router.post("/", usersController.create)
+router.get("/:id", usersController.findOne)
+router.patch("/:id", usersController.update)
 
 module.exports = router;
