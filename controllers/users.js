@@ -9,25 +9,17 @@ module.exports = {
       res.status(201).json({user:newUser})
     })
     .catch((err) =>{
-      res.status(400).json(err)
+      res.status(400).json({error: err.message})
     })
   },
   all: function(req,res,next){
-    User.find({})
-    .then((users) =>{
+    User.find({}, (err, users) => {
       res.status(200).json({users})
-    })
-    .catch((err) =>{
-      res.status(400).json(err)
     })
   },
   findOne: function(req,res,next){
-    User.findOne({gameId: req.params.gameId})
-    .then( user =>{
+    User.findOne({gameId: req.params.gameId}, (err, user) => {
       res.status(200).json({user})
-    })
-    .catch(err =>{
-      res.status(400).json(err)
     })
   },
   update: function(req,res,next){
@@ -44,7 +36,7 @@ module.exports = {
       res.status(201).json({user})
     })
     .catch(err =>{
-      res.status(400).json(err)
+      res.status(400).json({error: err.message})
     })
   }
 }

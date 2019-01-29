@@ -8,7 +8,6 @@ const mongoose = require('mongoose')
 const database = require('./helpers/database')
 
 mongoose.connect(database(process.env.NODE_ENV), { useNewUrlParser: true })
-// mongoose.connect(database, { useNewUrlParser: true })
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
