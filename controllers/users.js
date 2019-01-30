@@ -3,7 +3,8 @@ const User = require('../models/User')
 module.exports = {
   create: function(req,res,next){
     User.create({
-      gameId: req.body.gameId
+      gameId: req.body.gameId,
+      highScore: 0
     })
     .then((newUser) =>{
       res.status(201).json({user:newUser})
@@ -23,15 +24,17 @@ module.exports = {
     })
   },
   update: function(req,res,next){
-    User.findOneAndUpdate(
-      {
-        gameId: req.params.gameId
-      },
-      {
-        highScore: req.body.highScore
-      },
-      {new: true}
-    )
+    User.findOne({ gameId: req.params.gameId })
+    .then((user) => {
+      if (req.body.highScore < 0) {
+        throw Error('value should be positive')
+      } else if (req.body.highScore < user.highScore) {
+        throw Error('new highcore value should be higher')
+      } else {
+        user.highScore = req.body.highScore
+        return user.save()
+      }
+    })
     .then((user) =>{
       res.status(201).json({user})
     })
