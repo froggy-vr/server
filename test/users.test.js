@@ -1,6 +1,5 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const nock = require('nock')
 const app = require('../app')
 
 const expect = chai.expect
@@ -61,14 +60,7 @@ describe('User tests', function () {
           expect(res.body.users).to.be.an('array');
           done()
         })
-    }) 
-
-    // describe ('stubbed', function () {
-    //   beforeEach(() => {
-    //     nock()
-    //   })
-    // })
-
+    })
   });
 
   describe('GET /:id,', function () {
@@ -118,10 +110,10 @@ describe('User tests', function () {
 
   describe('PATCH /:id', function () {
     let user = {
-      gameId: 'abc123'
+      gameId: 'abc123',
     }
 
-    before(function (done) {
+    beforeEach(function (done) {
       chai
         .request(app)
         .post('/users')
@@ -148,6 +140,48 @@ describe('User tests', function () {
           expect(res.body.user).to.have.property('highScore');
           expect(res.body.user.gameId).to.equal(user.gameId);
           expect(res.body.user.highScore).to.eqls(updated.highScore);
+          done()
+        })
+    })
+
+    describe('patching with lower value', function() {
+      beforeEach(function(done) {
+        chai
+          .request(app)
+          .patch(`/users/${user.gameId}`)
+          .send({highScore: 3})
+          .end(function (err, res) {
+            done()
+          })
+      })
+
+      it('should error with status code 400', function (done) {
+        let updated = {
+          highScore: 1
+        }
+        chai
+          .request(app)
+          .patch(`/users/${user.gameId}`)
+          .send(updated)
+          .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(400);
+            done()
+          })
+      })
+    })
+
+    it('patching with negative value should error with status code 400', function (done) {
+      let updated = {
+        highScore: -2
+      }
+      chai
+        .request(app)
+        .patch(`/users/${user.gameId}`)
+        .send(updated)
+        .end(function (err, res) {
+          expect(err).to.be.null;
+          expect(res).to.have.status(400);
           done()
         })
     })
