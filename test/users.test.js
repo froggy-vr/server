@@ -1,5 +1,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const nock = require('nock')
 const app = require('../app')
 
 const expect = chai.expect
@@ -60,7 +61,14 @@ describe('User tests', function () {
           expect(res.body.users).to.be.an('array');
           done()
         })
-    })
+    }) 
+
+    // describe ('stubbed', function () {
+    //   beforeEach(() => {
+    //     nock()
+    //   })
+    // })
+
   });
 
   describe('GET /:id,', function () {
